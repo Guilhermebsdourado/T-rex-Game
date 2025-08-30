@@ -1,13 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
     const dino = document.querySelector('.dino')
     const grid = document.querySelector('.grid')
-
+    const alert = document.getElementById('alert')
+    let isGameOver = false
 
     function control(e) {
         if (e.code === "Space" && !isJumping) {
             jump()
         }
     }
+
+    document.addEventListener('keydown', control)
+
+
     let isJumping = false;
     let position = 0
     const ground = 0    //chão
@@ -40,10 +45,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function generateObstacles() {
-        const obstacle = document.createElement('div')
+        if (!isGameOver) {
+            let randomTime = Math.random() * 4000
+            let obstaclePosition = 2000
+            const obstacle = document.createElement('div')
+            obstacle.classList.add('obstacle')
+            grid.appendChild(obstacle)
+            obstacle.style.left = obstaclePosition + 'px'
+    
+            let timerId = setInterval(function() {
+                if (obstaclePosition > 0 && obstaclePosition < 60 && position < 60) {
+                    clearInterval(timerId)
+                    alert.innerHTML = 'Game Over'
+                    isGameOver = true
+                    //remover
+                    while (grid.firstChild) {
+                        grid.removeChild(grid.lastChild)
+                    }
+                }
+                obstaclePosition -=10
+                obstacle.style.left = obstaclePosition + 'px'
+            }, 20)
+            setTimeout(generateObstacles, randomTime)
+        }
     }
     generateObstacles()
-
-
-    document.addEventListener('keydown', control)
 });
