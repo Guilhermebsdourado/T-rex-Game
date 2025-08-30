@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/reset.css">
     <link rel="stylesheet" href="src/css/responsivo.css">
     <link rel="stylesheet" href="src/css/style.css">
+    <link rel="icon" type="image/png" href="src/img/dinoMorto.png">
+
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T-rex Game</title>
 </head>
+
 <body>
-    <div id="deserto">
-        <h2 id="alert">
-            <div class="grid">
-                <div class="dino">
-                    <img src="src/img/dinoVivo.png" alt="dinossauro">
-                </div>
-            </div>
-        </h2>
+    <button id="playMusic">Iniciar Jogo</button>
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="src/midia/gaming-game-minecraft-background-music-278382.mp3" type="audio/mpeg">
+    </audio>
+    <div id="deserto" class="stop">
+
+        <div class="grid">
+            <div class="dinoVivo"></div>
+        </div>
+        <h2 id="alert"></h2>
     </div>
-    
+
     <script src="src/js/index.js"></script>
 </body>
+
+<audio preload="auto" autoplay>
+    <source src="src/midia/gaming-game-minecraft-background-music-278382.mp3" type="audio/mpeg">
+    <source src="src/midia/gaming-game-minecraft-background-music-278382.ogg" type="audio/ogg">
+    <source src="src/midia/gaming-game-minecraft-background-music-278382.wav" type="audio/wav">
+</audio>
+
 </html>

@@ -1,9 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const dino = document.querySelector('.dino')
     const grid = document.querySelector('.grid')
+    const dino = document.querySelector('.dinoVivo')
+    const deserto = document.getElementById('deserto')
     const alert = document.getElementById('alert')
     let maxHeight = 370  // altura máxima do pulo
     let isGameOver = false
+
+    const playBtn = document.getElementById("playMusic")
+    const bgMusic = document.getElementById("bgMusic")
+
+    playBtn.addEventListener("click", () => {
+        bgMusic.play()
+        deserto.classList.remove('stop')
+        deserto.classList.add('deserto')
+        playBtn.style.display = "none" // esconde o botão
+        generateObstacles() // só inicia o jogo aqui
+    })
 
     // Variáveis físicas
     let isJumping = false
@@ -53,20 +65,20 @@ document.addEventListener('DOMContentLoaded', function () {
             position += velocity
 
             // Limite de altura
-        if (position >= maxHeight) {
-            position = maxHeight
-            velocity = 0   // força queda depois do teto
-        }
+            if (position >= maxHeight) {
+                position = maxHeight
+                velocity = 0   // força queda depois do teto
+            }
 
-        if (position <= ground) {
-            position = ground
-            isJumping = false
-            velocity = 0
-        }
+            if (position <= ground) {
+                position = ground
+                isJumping = false
+                velocity = 0
+            }
 
-        dino.style.bottom = position + "px"
-    }
-}, 20)
+            dino.style.bottom = position + "px"
+        }
+    }, 20)
 
     // Geração de obstáculos
     function generateObstacles() {
@@ -77,16 +89,20 @@ document.addEventListener('DOMContentLoaded', function () {
             obstacle.classList.add('obstacle')
             grid.appendChild(obstacle)
             obstacle.style.left = obstaclePosition + 'px'
-    
-            let timerId = setInterval(function() {
+
+            let timerId = setInterval(function () {
+                if (isGameOver) {
+                    clearInterval(timerId) // interrompe movimento do cacto
+                    return
+                }
                 if (obstaclePosition > 0 && obstaclePosition < 60 && position < 60) {
+                    dino.classList.remove('dinoVivo')
+                    dino.classList.add('dinoMorto')
                     clearInterval(timerId)
                     alert.innerHTML = 'Game Over'
                     isGameOver = true
-                    //remover
-                    while (grid.firstChild) {
-                        grid.removeChild(grid.lastChild)
-                    }
+
+                    deserto.classList.add('stop')
                 }
                 obstaclePosition -= 10
                 obstacle.style.left = obstaclePosition + 'px'
@@ -94,5 +110,4 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(generateObstacles, randomTime)
         }
     }
-    generateObstacles()
 })
