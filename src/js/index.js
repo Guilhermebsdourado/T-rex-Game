@@ -4,33 +4,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     function control(e) {
-        if (e.code === "Space") {
+        if (e.code === "Space" && !isJumping) {
             jump()
         }
     }
     let isJumping = false;
     let position = 0
-    function jump() {
-        let count = 0
-        let timeId = setInterval(function () {
-            // move down
-            if (count === 15) {
-                clearInterval(timeId)
-                let downTimerId = setInterval(function () {
-                    position -= 5
-                    count++
-                    position = position * gravity
-                    dino.style.bottom = position + 'px'
+    const ground = 0    //chão
 
-                }, 20);
+    function jump() {
+        isJumping = true
+        let count = 0
+        let upInterval = setInterval(function () {
+            // move cima
+            if (count >= 15) {
+                clearInterval(upInterval)
+                let downTimerId = setInterval(function () {
+                    if (position <= ground) {
+                        clearInterval(downTimerId)
+                        position = ground
+                        dino.style.bottom = position + 'px'
+                        isJumping = false  // voltou para o chão
+                    }else {
+                    position -= 25
+                    dino.style.bottom = position + 'px'
+                    }
+                }, 25)
+            }else {
+                // subir
+                position += 25
+                count++
+                dino.style.bottom = position + 'px'
             }
-            // move up
-            position += 30
-            count++
-            position = position * gravity
-            dino.style.bottom = position + 'px'
-        }, 20)
+        }, 35)
     }
+
+    function generateObstacles() {
+        const obstacle = document.createElement('div')
+    }
+    generateObstacles()
+
 
     document.addEventListener('keydown', control)
 });

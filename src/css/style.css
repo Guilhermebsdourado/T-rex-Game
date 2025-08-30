@@ -23,5 +23,12 @@
 .dino img {
     height: 170px;
     width: 170px;
-    margin-bottom: 0;
+}
+
+.obstacle {
+    background-image: url(../img/cactus.png);
+    width: 60px;
+    height: 60px;
+    position: relative;
+    bottom: 0;
 }
