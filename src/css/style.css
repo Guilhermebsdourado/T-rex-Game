@@ -1,0 +1,27 @@
+@keyframes slideright {
+    from {
+        background-position-x: 20000vw;
+    }
+    to {
+        background-position-x: 0;
+    }
+}
+
+#deserto {
+    background: url("../img/fundo.png") bottom/ auto 100%;
+    height: 100vh;
+    width: auto;
+    animation: slideright 800s infinite linear;
+    display: flex;
+    align-items: end; 
+}
+
+.dino {
+  position: relative;
+}
+
+.dino img {
+    height: 170px;
+    width: 170px;
+    margin-bottom: 0;
+}
