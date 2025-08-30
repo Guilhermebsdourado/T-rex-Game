@@ -4,46 +4,46 @@ document.addEventListener('DOMContentLoaded', function () {
     const alert = document.getElementById('alert')
     let isGameOver = false
 
+    // Variáveis físicas
+    let isJumping = false
+    let position = 0
+    let gravity = 2       // força da gravidade
+    let velocity = 0      // velocidade
+    let jumpForce = 32     // força do pulo
+    const ground = 0      // chão
+
+    // Função de pulo
+    function jump() {
+        if (!isJumping) {
+            isJumping = true
+            velocity = jumpForce
+        }
+    }
+
+    // Controle do teclado
     function control(e) {
         if (e.code === "Space" && !isJumping) {
             jump()
         }
     }
-
     document.addEventListener('keydown', control)
 
+    // Loop de atualização (aplica gravidade e movimento)
+    setInterval(() => {
+        if (isJumping || position > ground) {
+            position += velocity
+            velocity -= gravity
 
-    let isJumping = false;
-    let position = 0
-    const ground = 0    //chão
-
-    function jump() {
-        isJumping = true
-        let count = 0
-        let upInterval = setInterval(function () {
-            // move cima
-            if (count >= 15) {
-                clearInterval(upInterval)
-                let downTimerId = setInterval(function () {
-                    if (position <= ground) {
-                        clearInterval(downTimerId)
-                        position = ground
-                        dino.style.bottom = position + 'px'
-                        isJumping = false  // voltou para o chão
-                    }else {
-                    position -= 25
-                    dino.style.bottom = position + 'px'
-                    }
-                }, 25)
-            }else {
-                // subir
-                position += 25
-                count++
-                dino.style.bottom = position + 'px'
+            if (position <= ground) {
+                position = ground
+                isJumping = false
             }
-        }, 35)
-    }
 
+            dino.style.bottom = position + "px"
+        }
+    }, 20)
+
+    // Geração de obstáculos
     function generateObstacles() {
         if (!isGameOver) {
             let randomTime = Math.random() * 4000
@@ -63,11 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         grid.removeChild(grid.lastChild)
                     }
                 }
-                obstaclePosition -=10
+                obstaclePosition -= 10
                 obstacle.style.left = obstaclePosition + 'px'
             }, 20)
             setTimeout(generateObstacles, randomTime)
         }
     }
     generateObstacles()
-});
+})
