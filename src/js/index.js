@@ -2,17 +2,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const dino = document.querySelector('.dino')
     const grid = document.querySelector('.grid')
     const alert = document.getElementById('alert')
+    let maxHeight = 370  // altura máxima do pulo
     let isGameOver = false
 
     // Variáveis físicas
     let isJumping = false
     let position = 0
-    let gravity = 2       // força da gravidade
-    let velocity = 0      // velocidade
-    let jumpForce = 32     // força do pulo
-    const ground = 0      // chão
+    let gravity = 1.2       // força da gravidade
+    let velocity = 0        // velocidade vertical
+    let jumpForce = 20      // impulso inicial
+    let jumpHeld = false    // se a tecla está sendo segurada
+    const ground = 0        // chão
 
-    // Função de pulo
     function jump() {
         if (!isJumping) {
             isJumping = true
@@ -21,27 +22,51 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Controle do teclado
-    function control(e) {
-        if (e.code === "Space" && !isJumping) {
-            jump()
+    function controlDown(e) {
+        if (e.code === "Space") {
+            if (!isJumping) {
+                jump()
+            }
+            jumpHeld = true // segurando espaço
         }
     }
-    document.addEventListener('keydown', control)
+
+    function controlUp(e) {
+        if (e.code === "Space") {
+            jumpHeld = false // soltou espaço
+        }
+    }
+
+    document.addEventListener('keydown', controlDown)
+    document.addEventListener('keyup', controlUp)
 
     // Loop de atualização (aplica gravidade e movimento)
     setInterval(() => {
         if (isJumping || position > ground) {
-            position += velocity
-            velocity -= gravity
-
-            if (position <= ground) {
-                position = ground
-                isJumping = false
+            // Se estiver segurando espaço, aplica mais impulso extra
+            if (jumpHeld && velocity > 0) {
+                velocity -= 0.3   // controla quanto tempo continua subindo
+            } else {
+                velocity -= gravity
             }
 
-            dino.style.bottom = position + "px"
+            position += velocity
+
+            // Limite de altura
+        if (position >= maxHeight) {
+            position = maxHeight
+            velocity = 0   // força queda depois do teto
         }
-    }, 20)
+
+        if (position <= ground) {
+            position = ground
+            isJumping = false
+            velocity = 0
+        }
+
+        dino.style.bottom = position + "px"
+    }
+}, 20)
 
     // Geração de obstáculos
     function generateObstacles() {
