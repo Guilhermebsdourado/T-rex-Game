@@ -20,6 +20,8 @@ body {
     animation: slideright 800s infinite linear;
     display: flex;
     align-items: end; 
+    position: relative;
+    overflow: hidden;
 }
 
 .stop {
@@ -35,8 +37,8 @@ body {
     background-image: url('../img/dinoVivo.png');
     background-size: contain;
     background-repeat: no-repeat;
-    height: 170px;
-    width: 170px;
+    height: 250px;
+    width: 250px;
     position: absolute;
     bottom: 0;
     left: 50px;
@@ -48,16 +50,16 @@ body {
     background-repeat: no-repeat;
     height: 170px;
     width: 170px;   
-    margin-bottom: -70px;
-    margin-left: 22px;
+    margin-bottom: -20px;
+    transform: translateX(-60px);
     z-index: 10;
 }
 
 .obstacle {
-    background-image: url('../img/cactus.png');
-    width: 200px;
-    height: 100px;
+    background-image: url('../img/cactu.png');
+    width: 150px;
+    height: 150px;
     position: absolute;
-    bottom: 60px;
+    bottom: 80px;
     z-index: 5;
 }

@@ -1,0 +1,21 @@
+@media (max-width: 600px) {
+    .dinoVivo {
+        height: 100px;
+        width: 100px
+    }
+
+    .dinoMorto {
+        height: 70px;
+        width: 70px;
+        margin-bottom: -25px;
+        margin-left: 4px;
+        transform: translateX(-10px);
+    }
+
+    .obstacle {
+        background-image: url('../img/cactuMenor.png');
+        width: 60px;
+        height: 60px;
+        bottom: 30px;
+    }
+}

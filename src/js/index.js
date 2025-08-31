@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let maxHeight = 370  // altura máxima do pulo
     let isGameOver = false
 
-    const playBtn = document.getElementById("playMusic")
+    const playBtn = document.getElementById("play")
     const bgMusic = document.getElementById("bgMusic")
 
     playBtn.addEventListener("click", () => {
@@ -49,36 +49,50 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function touchStart(e) {
+        if (!isJumping) {
+            jump()
+        }
+        jumpHeld = true
+    }
+
+    function touchEnd(e) {
+        jumpHeld = false
+    }
+
+
     document.addEventListener('keydown', controlDown)
     document.addEventListener('keyup', controlUp)
+    document.addEventListener('touchstart', touchStart)
+    document.addEventListener('touchend', touchEnd)
 
     // Loop de atualização (aplica gravidade e movimento)
     setInterval(() => {
-        if (isJumping || position > ground) {
-            // Se estiver segurando espaço, aplica mais impulso extra
-            if (jumpHeld && velocity > 0) {
-                velocity -= 0.3   // controla quanto tempo continua subindo
-            } else {
-                velocity -= gravity
-            }
-
-            position += velocity
-
-            // Limite de altura
-            if (position >= maxHeight) {
-                position = maxHeight
-                velocity = 0   // força queda depois do teto
-            }
-
-            if (position <= ground) {
-                position = ground
-                isJumping = false
-                velocity = 0
-            }
-
-            dino.style.bottom = position + "px"
+    if (isJumping || position > ground) {
+        // Se estiver segurando espaço, aplica mais impulso extra
+        if (jumpHeld && velocity > 0) {
+            velocity -= 0.3   // controla quanto tempo continua subindo
+        } else {
+            velocity -= gravity
         }
-    }, 20)
+
+        position += velocity
+
+        // Limite de altura
+        if (position >= maxHeight) {
+            position = maxHeight
+            velocity = 0   // força queda depois do teto
+        }
+
+        if (position <= ground) {
+            position = ground
+            isJumping = false
+            velocity = 0
+        }
+
+        dino.style.bottom = position + "px"
+    }
+}, 20)
 
     // Geração de obstáculos
     function generateObstacles() {

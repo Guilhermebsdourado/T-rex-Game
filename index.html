@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/css/reset.css">
+    <link rel="stylesheet" href="src/css/telaInicial.css">
+    <link rel="stylesheet" href="src/css/functions.css">
     <link rel="stylesheet" href="src/css/responsivo.css">
-    <link rel="stylesheet" href="src/css/style.css">
     <link rel="icon" type="image/png" href="src/img/dinoMorto.png">
 
 
@@ -15,10 +16,14 @@
 </head>
 
 <body>
-    <button id="playMusic">Iniciar Jogo</button>
-    <audio id="bgMusic" preload="auto" loop>
-        <source src="src/midia/gaming-game-minecraft-background-music-278382.mp3" type="audio/mpeg">
-    </audio>
+    <div class="telaInicio">
+        <button id="play" class="btn-17 btnPlay">
+            <span class="text-container">
+                <span class="text">Jogar</span>
+            </span>
+        </button>
+    </div>
+
     <div id="deserto" class="stop">
 
         <div class="grid">
@@ -27,13 +32,13 @@
         <h2 id="alert"></h2>
     </div>
 
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="src/midia/gaming-game-minecraft-background-music-278382.mp3" type="audio/mpeg">
+        <source src="src/midia/gaming-game-minecraft-background-music-278382.ogg" type="audio/ogg">
+        <source src="src/midia/gaming-game-minecraft-background-music-278382.wav" type="audio/wav">
+    </audio>
+
     <script src="src/js/index.js"></script>
 </body>
-
-<audio preload="auto" autoplay>
-    <source src="src/midia/gaming-game-minecraft-background-music-278382.mp3" type="audio/mpeg">
-    <source src="src/midia/gaming-game-minecraft-background-music-278382.ogg" type="audio/ogg">
-    <source src="src/midia/gaming-game-minecraft-background-music-278382.wav" type="audio/wav">
-</audio>
 
 </html>
